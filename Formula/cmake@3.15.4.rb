@@ -1,4 +1,4 @@
-class CmakeAT3155 < Formula
+class CmakeAT3154 < Formula
   desc "Cross-platform make"
   homepage "https://www.cmake.org/"
   url "https://github.com/Kitware/CMake/releases/download/v3.15.4/cmake-3.15.4.tar.gz"
