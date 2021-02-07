@@ -5,7 +5,7 @@ class Gothanks < Formula
   version "0.1.0"
   sha256 "ce5440334b3eac2e058724faa4c6e4478ca1d81ea087e55ccca33f1996752aad"
   license "MIT"
-  
+
   # Bump comment
 
   bottle do
