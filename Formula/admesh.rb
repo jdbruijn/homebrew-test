@@ -2,8 +2,11 @@ class Admesh < Formula
   desc "Processes triangulated solid meshes"
   homepage "https://github.com/admesh/admesh"
   url "https://github.com/admesh/admesh/releases/download/v0.98.4/admesh-0.98.4.tar.gz"
+  version "0.1.0"
   sha256 "1c441591f2223034fed2fe536cf73e996062cac840423c3abe5342f898a819bb"
   license "MIT"
+
+  # Bump comment
 
   def install
     system "./configure", "--disable-dependency-tracking",
