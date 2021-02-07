@@ -4,10 +4,33 @@ on:
     branches: main
   pull_request:
 jobs:
+  tap-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Cache Homebrew Bundler RubyGems
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ runner.os }}-rubygems-
+
+      - name: Install Homebrew Bundler RubyGems
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: brew install-bundler-gems
+
+      - run: brew test-bot --only-tap-syntax
+
   test-bot:
+    needs: tap-syntax
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest]
+        formula: [admesh, aha, gothanks]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set up Homebrew
@@ -30,9 +53,7 @@ jobs:
 
       - run: brew test-bot --only-setup
 
-      - run: brew test-bot --only-tap-syntax
-
-      - run: brew test-bot --only-formulae
+      - run: brew test-bot --only-formulae ${{ matrix.formula }}
         if: github.event_name == 'pull_request'
 
       - name: Upload bottles as artifact
